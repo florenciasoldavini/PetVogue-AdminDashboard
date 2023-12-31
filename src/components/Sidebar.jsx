@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { RiHomeLine, RiFileCopyLine } from "react-icons/ri";
-import { FaWallet } from "react-icons/fa";
-import { AiOutlinePieChart } from "react-icons/ai";
-import Badge from "./Badge";
+
+import { FaCalendarAlt, FaPaw, FaShoppingCart, FaUser, FaHome } from "react-icons/fa";
+import { RiServiceFill } from "react-icons/ri";
+
+
+
+import Badge from "./Dashboard/Badge";
 import AvatarImage from "../assets/avatarImage.jpeg";
 import { darkThemeColor } from "../utils";
+
 function Sidebar() {
   return (
     <Container>
@@ -17,27 +21,27 @@ function Sidebar() {
       <LinksContainer>
         <Links>
           <Link>
-            <RiHomeLine />
+            <FaHome />
             <h3>Dashboard</h3>
           </Link>
           <Link>
-            <RiFileCopyLine />
+            <FaPaw />
             <h3>Pets</h3>
           </Link>
           <Link>
-            <FaWallet />
+            <FaUser />
             <h3>Users</h3>
           </Link>
           <Link>
-            <AiOutlinePieChart />
+            <RiServiceFill />
             <h3>Services</h3>
           </Link>
           <Link>
-            <AiOutlinePieChart />
+            <FaCalendarAlt />
             <h3>Appointments</h3>
           </Link>
           <Link>
-            <AiOutlinePieChart />
+            <FaShoppingCart />
             <h3>Orders</h3>
           </Link>
         </Links>
