@@ -2,7 +2,7 @@ import axios from "axios";
 import { setAllUsers } from "../../slices/usersSlice"
 
 const getAllUsers = () => {
-    const endpoint = "http://localhost:3001/api/orders/"
+    const endpoint = "http://localhost:3001/users/get/"
 
     return async (dispatch) => {
         try {

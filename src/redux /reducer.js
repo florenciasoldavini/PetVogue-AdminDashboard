@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
-import appointmentsSlice from "./slices/appointmentsSlice";
-import ordersSlice from "./slices/ordersSlice";
-import petsSlice from "./slices/petsSlice";
-import productsSlice from "./slices/productsSlice";
-import servicesSlice from "./slices/servicesSlice";
-import usersSlice from "./slices/usersSlice";
+import appointmentsReducer from "./slices/appointmentsSlice";
+import ordersReducer from "./slices/ordersSlice";
+import petsReducer from "./slices/petsSlice";
+import productsReducer from "./slices/productsSlice";
+import servicesReducer from "./slices/servicesSlice";
+import usersReducer from "./slices/usersSlice";
 
 const rootReducer = combineReducers({
     appointments: appointmentsReducer, 

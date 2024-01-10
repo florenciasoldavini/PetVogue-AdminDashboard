@@ -2,7 +2,7 @@ import axios from "axios";
 import { setAllServices } from "../../slices/servicesSlice"
 
 const getAllServices = () => {
-    const endpoint = "http://localhost:3001/api/orders/"
+    const endpoint = "http://localhost:3001/services/get/"
 
     return async (dispatch) => {
         try {
