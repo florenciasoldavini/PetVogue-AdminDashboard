@@ -13,6 +13,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import HelpIcon from '@mui/icons-material/Help';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
@@ -175,6 +176,7 @@ const Sidebar = () => {
             >
               Pages
             </Typography>
+            
             <Item
               title="Calendar"
               to="/calendar"
@@ -186,6 +188,13 @@ const Sidebar = () => {
               title="FAQ Page"
               to="/faq"
               icon={<HelpIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Logout"
+              to="/faq"
+              icon={<LogoutIcon />}
               selected={selected}
               setSelected={setSelected}
             />
