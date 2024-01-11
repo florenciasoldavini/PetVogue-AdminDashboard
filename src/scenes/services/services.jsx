@@ -1,16 +1,21 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
+import { useSelector } from 'react-redux';
+
 const Services = () => {
+  const services = useSelector(state => state.services.allServices);
+
+  console.log(services);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "id", 
+    { field: "serviceID", 
     headerName: "ID", 
     flex: 0.5 
     },
@@ -26,13 +31,28 @@ const Services = () => {
       flex: 1,
     },
     {
-      field: "prepareition",
-      headerName: "Preparación previa",
+      field: "category",
+      headerName: "Categoría",
       flex: 1,
     },
     {
       field: "price",
       headerName: "Precio",
+      flex: 1,
+    },
+    {
+      field: "image",
+      headerName: "icono",
+      flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Estado",
+      flex: 1,
+    },
+    {
+      field: "animalType",
+      headerName: "Tipo de mascota",
       flex: 1,
     },
   ];
@@ -76,7 +96,8 @@ const Services = () => {
       >
         <DataGrid
         checkboxSelection
-          rows={mockDataContacts}
+        getRowId={(row) =>  row.serviceID}
+          rows={services.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

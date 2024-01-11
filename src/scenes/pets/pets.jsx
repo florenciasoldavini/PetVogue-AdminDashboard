@@ -1,24 +1,23 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
+import { useSelector } from 'react-redux';
 
 const Pets = () => {
+  const pets = useSelector(state => state.pets.allPets);
+
+  console.log(pets);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "id", 
+    { field: "petID", 
     headerName: "ID", 
     flex: 0.5 
-    },
-    {
-      field: "image",
-      headerName: "Foto",
-      flex: 0.5,
     },
     {
       field: "name",
@@ -27,18 +26,23 @@ const Pets = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "species",
-      headerName: "Especie",
-      flex: 1,
-    },
-    {
-      field: "breed",
-      headerName: "Raza",
+      field: "birth",
+      headerName: "Fecha de nacimiento",
       flex: 1,
     },
     {
       field: "gender",
       headerName: "Género",
+      flex: 1,
+    },
+    {
+      field: "specie",
+      headerName: "Especia",
+      flex: 1,
+    },
+    {
+      field: "breed",
+      headerName: "Raza",
       flex: 1,
     },
     {
@@ -52,18 +56,18 @@ const Pets = () => {
       flex: 1,
     },
     {
-      field: "height",
-      headerName: "Altura",
+      field: "size",
+      headerName: "Tamaño",
       flex: 1,
     },
     {
-    field: "length",
-    headerName: "Largo",
+    field: "image",
+    headerName: "Foto",
     flex: 1,
   },
   {
-    field: "birth",
-    headerName: "Fecha de nacimiento",
+    field: "status",
+    headerName: "Estado",
     flex: 1,
   },
   ];
@@ -107,7 +111,8 @@ const Pets = () => {
       >
         <DataGrid
         checkboxSelection
-          rows={mockDataContacts}
+        getRowId={(row) =>  row.petID}
+          rows={pets.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

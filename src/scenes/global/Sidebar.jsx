@@ -79,7 +79,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  PETVOGUE 
+                  PETVOGUE
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -154,16 +154,16 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Ordenes de compra"
-              to="/orders"
-              icon={<ShoppingCartIcon />}
+              title="Productos"
+              to="/products"
+              icon={<InventoryIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Productos"
-              to="/products"
-              icon={<InventoryIcon />}
+              title="Ordenes de compra"
+              to="/orders"
+              icon={<ShoppingCartIcon />}
               selected={selected}
               setSelected={setSelected}
             />

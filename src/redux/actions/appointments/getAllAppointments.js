@@ -1,12 +1,12 @@
 import axios from "axios";
-import { setAllAppointments } from "../../slices/appointmentsSliceSlice"
+import { setAllAppointments } from "../../slices/appointmentsSlice"
 
 const getAllAppointments = () => {
-    const endpoint = "http://localhost:3001/appointments/get/"
+    const endpoint = "http://localhost:3001/bookings/get/"
 
     return async (dispatch) => {
         try {
-            const response = await axios.get(endpoint);
+            const response = await axios.post(endpoint);
             let data = response.data;
 
             return dispatch(setAllAppointments(data));

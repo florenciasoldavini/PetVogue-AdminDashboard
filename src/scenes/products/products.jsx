@@ -1,16 +1,22 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
+import { useSelector } from 'react-redux';
+
+
 const Products = () => {
+  const products = useSelector(state => state.products.allProducts);
+
+  console.log(products);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "id", 
+    { field: "productID", 
     headerName: "ID", 
     flex: 0.5 
     },
@@ -26,13 +32,33 @@ const Products = () => {
       flex: 1,
     },
     {
-      field: "prepareition",
-      headerName: "Preparación previa",
+      field: "type",
+      headerName: "Tipo",
       flex: 1,
     },
     {
       field: "price",
       headerName: "Precio",
+      flex: 1,
+    },
+    {
+      field: "image",
+      headerName: "imagen",
+      flex: 1,
+    },
+    {
+      field: "stock",
+      headerName: "Stock",
+      flex: 1,
+    },
+    {
+      field: "brand",
+      headerName: "Marca",
+      flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Habilitado",
       flex: 1,
     },
   ];
@@ -76,7 +102,8 @@ const Products = () => {
       >
         <DataGrid
         checkboxSelection
-          rows={mockDataContacts}
+        getRowId={(row) =>  row.productID}
+          rows={products.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

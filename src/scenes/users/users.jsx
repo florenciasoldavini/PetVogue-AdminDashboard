@@ -1,36 +1,44 @@
 import { Box, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 
+import { useSelector } from 'react-redux';
+
+
 const Users = () => {
+  const users = useSelector(state => state.users.allUsers);
+
+console.log(users);
+
+
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
     {
-      field: "id",
+      field: "userID",
       headerName: "ID",
       flex: 0.5
     },
     {
-      field: "image",
+      field: "photo",
       headerName: "Foto",
       flex: 0.5,
     },
     {
-      field: "Name",
+      field: "firstName",
       headerName: "Nombre",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "Lastname",
+      field: "lastName",
       headerName: "Apellido",
       flex: 1,
       cellClassName: "name-column--cell",
@@ -61,15 +69,15 @@ const Users = () => {
       flex: 1,
     },
     {
-      field: "DNI",
+      field: "dni",
       headerName: "DNI",
       flex: 1,
     },
     {
-      field: "accessLevel",
+      field: "systemRole",
       headerName: "Role",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
+      renderCell: ({ row: { systemRole } }) => {
         return (
           <Box
             width="60%"
@@ -78,19 +86,19 @@ const Users = () => {
             display="flex"
             justifyContent="center"
             backgroundColor={
-              access === "admin"
+              systemRole === "admin"
                 ? colors.greenAccent[600]
-                : access === "manager"
+                : systemRole === "manager"
                   ? colors.greenAccent[700]
                   : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
+            {systemRole === "admin" && <AdminPanelSettingsOutlinedIcon />}
+            {systemRole === "manager" && <SecurityOutlinedIcon />}
+            {systemRole === "usuario" && <LockOpenOutlinedIcon />}
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
+              {systemRole}
             </Typography>
           </Box>
         );
@@ -137,7 +145,8 @@ const Users = () => {
       >
         <DataGrid
           checkboxSelection
-          rows={mockDataContacts}
+          getRowId={(row) =>  row.userID}
+          rows={users.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

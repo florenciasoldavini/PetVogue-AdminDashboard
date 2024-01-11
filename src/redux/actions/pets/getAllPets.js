@@ -6,7 +6,7 @@ const getAllPets = () => {
 
     return async (dispatch) => {
         try {
-            const response = await axios.get(endpoint);
+            const response = await axios.post(endpoint);
             let data = response.data;
 
             return dispatch(setAllPets(data));

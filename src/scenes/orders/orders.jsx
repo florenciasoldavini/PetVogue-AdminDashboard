@@ -1,40 +1,90 @@
 import { Box,  } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
-
+import { useSelector } from 'react-redux';
 
 const Orders = () => {
+  const orders = useSelector(state => state.orders.allOrders);
+
+  console.log(orders);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "id", 
-    headerName: "ID", 
-    flex: 0.5 
+    { field: "orderID", 
+    headerName: "orderID", 
+    flex: 1
+    },
+    { field: "userID", 
+    headerName: "userID", 
+    flex: 1
+    },
+    { field: "productID", 
+    headerName: "productID", 
+    flex: 1 
+    },
+    { field: "serviceID", 
+    headerName: "serviceID", 
+    flex: 1
     },
     {
-      field: "name",
-      headerName: "Nombre",
+      field: "date",
+      headerName: "Fecha",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "description",
-      headerName: "Descripción",
+      field: "quantity",
+      headerName: "Cantidad",
       flex: 1,
     },
     {
-      field: "prepareition",
-      headerName: "Preparación previa",
+      field: "amount",
+      headerName: "Cantidad",
       flex: 1,
     },
     {
-      field: "price",
-      headerName: "Precio",
+      field: "type",
+      headerName: "Tipo",
+      flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Estado",
+      flex: 1,
+    },
+    {
+      field: "rate",
+      headerName: "Tasa",
+      flex: 1,
+    },
+    {
+      field: "currency_id",
+      headerName: "currency_id",
+      flex: 1,
+    },
+    {
+      field: "mp_payment_id",
+      headerName: "mp_payment_id",
+      flex: 1,
+    },
+    {
+      field: "mp_status",
+      headerName: "mp_status",
+      flex: 1,
+    },
+    {
+      field: "mp_merchant_order_id",
+      headerName: "mp_merchant_order_id",
+      flex: 1,
+    },
+    {
+      field: "mp_external_reference",
+      headerName: "mp_external_reference",
       flex: 1,
     },
   ];
@@ -78,7 +128,8 @@ const Orders = () => {
       >
         <DataGrid
         checkboxSelection
-          rows={mockDataContacts}
+        getRowId={(row) =>  row.orderID}
+          rows={orders.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
@@ -14,9 +15,27 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 
+import getAllUsers from "./redux/actions/users/getAllUsers";
+import getAllPets from "./redux/actions/pets/getAllPets";
+import getAllOrders from "./redux/actions/orders/getAllOrders";
+import getAllProducts from "./redux/actions/products/getAllProducts";
+import getAllServices from "./redux/actions/services/getAllServices";
+import getAllAppointments from "./redux/actions/appointments/getAllAppointments";
+
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(getAllPets());
+    dispatch(getAllOrders());
+    dispatch(getAllProducts());
+    dispatch(getAllServices());
+    dispatch(getAllAppointments());
+});
 
   return (
     <ColorModeContext.Provider value={colorMode}>
