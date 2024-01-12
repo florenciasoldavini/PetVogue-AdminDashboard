@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 const Users = () => {
   const users = useSelector(state => state.users.allUsers);
 
-console.log(users);
+  console.log(users);
 
 
 
@@ -145,7 +145,7 @@ console.log(users);
       >
         <DataGrid
           checkboxSelection
-          getRowId={(row) =>  row.userID}
+          getRowId={(row) => row.userID}
           rows={users.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}

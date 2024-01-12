@@ -2,7 +2,7 @@ import axios from "axios";
 import { setOrderDetail } from "../../slices/ordersSlice"
 
 const getOrderById = (id) => {
-    const endpoint = "http://localhost:3001/orders/get/" + id
+    const endpoint = "https://petvogue.onrender.com/orders/get/" + id
 
     return async (dispatch) => {
         try {

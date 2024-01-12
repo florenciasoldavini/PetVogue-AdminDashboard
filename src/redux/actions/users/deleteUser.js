@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const deleteUser = () => {
-    const endpoint = "http://localhost:3001/users/delete/"
+    const endpoint = "https://petvogue.onrender.com/users/delete/"
 
     return async () => {
         try {

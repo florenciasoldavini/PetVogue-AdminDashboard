@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const createUser = () => {
-    const endpoint = "http://localhost:3001/users/post/"
+    const endpoint = "https://petvogue.onrender.com/users/post/"
 
     return async () => {
         try {
