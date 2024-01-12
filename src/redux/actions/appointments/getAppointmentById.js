@@ -2,7 +2,7 @@ import axios from "axios";
 import { setAppointmentDetail } from "../../slices/appointmentsSlice"
 
 const getAppointmentById = (id) => {
-    const endpoint = "http://localhost:3001/appointments/get/" + id
+    const endpoint = "https://petvogue.onrender.com/appointments/get/" + id
 
     return async (dispatch) => {
         try {

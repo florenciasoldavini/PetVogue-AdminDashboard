@@ -2,7 +2,7 @@ import axios from "axios";
 import { setAllProducts } from "../../slices/productsSlice"
 
 const getAllProducts = () => {
-    const endpoint = "http://localhost:3001/products/get/"
+    const endpoint = "https://petvogue.onrender.com/products/get/"
 
     return async (dispatch) => {
         try {

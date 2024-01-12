@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const updateService = () => {
-    const endpoint = "http://localhost:3001/services/put/"
+    const endpoint = "https://petvogue.onrender.com/services/put/"
 
     return async () => {
         try {

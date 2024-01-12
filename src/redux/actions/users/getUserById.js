@@ -2,7 +2,7 @@ import axios from "axios";
 import { setUserDetail } from "../../slices/usersSlice"
 
 const getUserById = (id) => {
-    const endpoint = "http://localhost:3001/users/get/" + id
+    const endpoint = "https://petvogue.onrender.com/users/get/" + id
 
     return async (dispatch) => {
         try {
