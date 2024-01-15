@@ -1,21 +1,21 @@
 import axios from "axios";
-import { setLogin } from "../../slices/loginSlice"
+import { setLogin } from "../../slices/loginSlice";
 
-const login = () => {
-    const endpoint = ""
+const login = (userData) => {
+  const endpoint = "http://localhost:3001/users/admin/login";
 
-    return async (dispatch) => {
-        try {
-            const response = await axios.post(endpoint);
-            let data = response.data;
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(endpoint, userData);
+      let data = response.data;
 
-            console.log(data)
+      console.log(data);
 
-            return dispatch(setLogin(data));
-        } catch (error) {
-            console.log(error);
-        }
-    };
+      return dispatch(setLogin(data));
+    } catch (error) {
+      return error;
+    }
+  };
 };
 
 export default login;

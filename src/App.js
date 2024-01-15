@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
@@ -14,6 +14,7 @@ import FAQ from "./scenes/faq";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
+import Login from "./scenes/login/Login";
 
 import getAllUsers from "./redux/actions/users/getAllUsers";
 import getAllPets from "./redux/actions/pets/getAllPets";
@@ -22,11 +23,13 @@ import getAllProducts from "./redux/actions/products/getAllProducts";
 import getAllServices from "./redux/actions/services/getAllServices";
 import getAllAppointments from "./redux/actions/appointments/getAllAppointments";
 
+import NotLoggedInRoutes from "./utils/NotLoggedInRoutes";
+import LoggedInRoutes from "./utils/LoggedInRoutes";
+
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -35,7 +38,7 @@ function App() {
     dispatch(getAllProducts());
     dispatch(getAllServices());
     dispatch(getAllAppointments());
-});
+  });
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -45,16 +48,25 @@ function App() {
           <Sidebar isSidebar={isSidebar} />
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
+
+            {/* Rutas privadas para usuario no autenticado */}
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/createuser" element={<CreateUser />} />
-              <Route path="/pets" element={<Pets />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/calendar" element={<Calendar />} />
+              <Route element={<NotLoggedInRoutes />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/createuser" element={<CreateUser />} />
+                <Route path="/pets" element={<Pets />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/calendar" element={<Calendar />} />
+              </Route>
+
+              {/* Una vez autenticado, no dejar entrar al login */}
+              <Route element={<LoggedInRoutes />}>
+                <Route path="/login" element={<Login />} />
+              </Route>
             </Routes>
           </main>
         </div>

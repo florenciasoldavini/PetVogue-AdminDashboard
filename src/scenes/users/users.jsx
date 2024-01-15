@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
@@ -6,16 +6,12 @@ import { useTheme } from "@mui/material";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-
-import { useSelector } from 'react-redux';
-
+import { useSelector } from "react-redux";
 
 const Users = () => {
-  const users = useSelector(state => state.users.allUsers);
+  const users = useSelector((state) => state.users.allUsers);
 
   console.log(users);
-
-
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -24,7 +20,7 @@ const Users = () => {
     {
       field: "userID",
       headerName: "ID",
-      flex: 0.5
+      flex: 0.5,
     },
     {
       field: "photo",
@@ -89,8 +85,8 @@ const Users = () => {
               systemRole === "admin"
                 ? colors.greenAccent[600]
                 : systemRole === "manager"
-                  ? colors.greenAccent[700]
-                  : colors.greenAccent[700]
+                ? colors.greenAccent[700]
+                : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
@@ -107,16 +103,13 @@ const Users = () => {
   ];
 
   return (
-    
     <Box m="20px">
-      <Header
-        title="USUARIOS"
-      />
-                  <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Crear 
-              </Button>
-            </Box>
+      <Header title="USUARIOS" />
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button type="submit" color="secondary" variant="contained">
+          Crear
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
