@@ -41,7 +41,7 @@ const CreateUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="First Name"
+                label="Nombre"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.firstName}
@@ -54,7 +54,7 @@ const CreateUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Last Name"
+                label="Apellido"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.lastName}
