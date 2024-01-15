@@ -38,7 +38,7 @@ const Users = () => {
     {
       field: "userID",
       headerName: "ID",
-      flex: 0.5
+      flex: 0.5,
     },
     {
       field: "photo",
@@ -103,8 +103,8 @@ const Users = () => {
               systemRole === "admin"
                 ? colors.greenAccent[600]
                 : systemRole === "manager"
-                  ? colors.greenAccent[700]
-                  : colors.greenAccent[700]
+                ? colors.greenAccent[700]
+                : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
