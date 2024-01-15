@@ -6,6 +6,7 @@ import petsReducer from "./slices/petsSlice";
 import productsReducer from "./slices/productsSlice";
 import servicesReducer from "./slices/servicesSlice";
 import usersReducer from "./slices/usersSlice";
+import loginReducer from "./slices/loginSlice";
 
 const rootReducer = combineReducers({
     appointments: appointmentsReducer, 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     products: productsReducer,
     services: servicesReducer, 
     users: usersReducer, 
+    login: loginReducer
   });
   
   export default rootReducer;

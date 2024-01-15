@@ -5,7 +5,7 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard/dashboard";
 import Users from "./scenes/users/users";
-import CreateUser from "./scenes/forms/createUser";
+import CreateUser from "./scenes/forms/create/createUser";
 import Pets from "./scenes/pets/pets";
 import Services from "./scenes/services/services";
 import Orders from "./scenes/orders/orders";
