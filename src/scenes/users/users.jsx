@@ -107,10 +107,16 @@ const Users = () => {
   ];
 
   return (
+    
     <Box m="20px">
       <Header
         title="USUARIOS"
       />
+                  <Box display="flex" justifyContent="end" mt="20px">
+              <Button type="submit" color="secondary" variant="contained">
+                Crear 
+              </Button>
+            </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
