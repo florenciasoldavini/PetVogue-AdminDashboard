@@ -2,7 +2,7 @@ import axios from "axios";
 import { setLogin } from "../../slices/loginSlice";
 
 const login = (userData) => {
-  const endpoint = "http://localhost:3001/users/admin/login";
+  const endpoint = "https://petvogue.onrender.com/users/admin/login";
 
   return async (dispatch) => {
     try {
