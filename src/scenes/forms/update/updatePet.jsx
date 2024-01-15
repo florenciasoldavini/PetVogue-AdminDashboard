@@ -4,7 +4,7 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
 
-const CreatePet = () => {
+const UpdatePet = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
@@ -13,7 +13,7 @@ const CreatePet = () => {
 
   return (
     <Box m="20px">
-      <Header title="CREAR NUEVA MASCOTA"  />
+      <Header title="MODIFICAR MASCOTA"  />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -151,4 +151,4 @@ const initialValues = {
   address2: "",
 };
 
-export default CreatePet;
+export default UpdatePet;

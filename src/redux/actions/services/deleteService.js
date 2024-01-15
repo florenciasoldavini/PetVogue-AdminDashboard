@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const deleteService = () => {
-    const endpoint = "https://petvogue.onrender.com/services/delete/"
+const deleteService = (id) => {
+    const endpoint = "https://petvogue.onrender.com/services/delete/" + id
 
     return async () => {
         try {
