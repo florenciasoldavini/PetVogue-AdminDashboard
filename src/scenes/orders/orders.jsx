@@ -1,8 +1,9 @@
-import { Box,  } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
@@ -15,21 +16,25 @@ const Orders = () => {
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "orderID", 
-    headerName: "orderID", 
-    flex: 1
+    {
+      field: "orderID",
+      headerName: "orderID",
+      flex: 1
     },
-    { field: "userID", 
-    headerName: "userID", 
-    flex: 1
+    {
+      field: "userID",
+      headerName: "userID",
+      flex: 1
     },
-    { field: "productID", 
-    headerName: "productID", 
-    flex: 1 
+    {
+      field: "productID",
+      headerName: "productID",
+      flex: 1
     },
-    { field: "serviceID", 
-    headerName: "serviceID", 
-    flex: 1
+    {
+      field: "serviceID",
+      headerName: "serviceID",
+      flex: 1
     },
     {
       field: "date",
@@ -94,6 +99,11 @@ const Orders = () => {
       <Header
         title="ORDENES DE COMPRA"
       />
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button component={Link} to="/orders/form/create" color="secondary" variant="contained">
+          Crear nueva orden de compra
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -127,8 +137,8 @@ const Orders = () => {
         }}
       >
         <DataGrid
-        checkboxSelection
-        getRowId={(row) =>  row.orderID}
+          checkboxSelection
+          getRowId={(row) => row.orderID}
           rows={orders.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}

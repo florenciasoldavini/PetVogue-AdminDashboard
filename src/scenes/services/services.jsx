@@ -1,8 +1,9 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
@@ -15,9 +16,10 @@ const Services = () => {
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "serviceID", 
-    headerName: "ID", 
-    flex: 0.5 
+    {
+      field: "serviceID",
+      headerName: "ID",
+      flex: 0.5
     },
     {
       field: "name",
@@ -62,6 +64,11 @@ const Services = () => {
       <Header
         title="SERVICIOS"
       />
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button component={Link} to="/services/form/create" color="secondary" variant="contained">
+          Crear nuevo servicio
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -95,8 +102,8 @@ const Services = () => {
         }}
       >
         <DataGrid
-        checkboxSelection
-        getRowId={(row) =>  row.serviceID}
+          checkboxSelection
+          getRowId={(row) => row.serviceID}
           rows={services.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}

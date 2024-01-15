@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
@@ -6,6 +6,7 @@ import { useTheme } from "@mui/material";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
@@ -107,16 +108,16 @@ const Users = () => {
   ];
 
   return (
-    
+
     <Box m="20px">
       <Header
         title="USUARIOS"
       />
-                  <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Crear 
-              </Button>
-            </Box>
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button component={Link} to="/users/form/create" color="secondary" variant="contained">
+          Crear nuevo usuario
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"

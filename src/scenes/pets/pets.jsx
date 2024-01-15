@@ -1,8 +1,9 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
@@ -15,9 +16,10 @@ const Pets = () => {
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "petID", 
-    headerName: "ID", 
-    flex: 0.5 
+    {
+      field: "petID",
+      headerName: "ID",
+      flex: 0.5
     },
     {
       field: "name",
@@ -61,15 +63,15 @@ const Pets = () => {
       flex: 1,
     },
     {
-    field: "image",
-    headerName: "Foto",
-    flex: 1,
-  },
-  {
-    field: "status",
-    headerName: "Estado",
-    flex: 1,
-  },
+      field: "image",
+      headerName: "Foto",
+      flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Estado",
+      flex: 1,
+    },
   ];
 
   return (
@@ -77,6 +79,11 @@ const Pets = () => {
       <Header
         title="MASCOTAS"
       />
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button component={Link} to="/pets/form/create" color="secondary" variant="contained">
+          Crear nueva mascota
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -110,8 +117,8 @@ const Pets = () => {
         }}
       >
         <DataGrid
-        checkboxSelection
-        getRowId={(row) =>  row.petID}
+          checkboxSelection
+          getRowId={(row) => row.petID}
           rows={pets.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}

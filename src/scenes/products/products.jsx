@@ -1,8 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import { Link } from 'react-router-dom';
+
 
 import { useSelector } from 'react-redux';
 
@@ -16,9 +18,10 @@ const Products = () => {
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "productID", 
-    headerName: "ID", 
-    flex: 0.5 
+    {
+      field: "productID",
+      headerName: "ID",
+      flex: 0.5
     },
     {
       field: "name",
@@ -68,6 +71,11 @@ const Products = () => {
       <Header
         title="PRODUCTOS"
       />
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button component={Link} to="/products/form/create" color="secondary" variant="contained">
+          Crear nuevo producto
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -101,8 +109,8 @@ const Products = () => {
         }}
       >
         <DataGrid
-        checkboxSelection
-        getRowId={(row) =>  row.productID}
+          checkboxSelection
+          getRowId={(row) => row.productID}
           rows={products.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
