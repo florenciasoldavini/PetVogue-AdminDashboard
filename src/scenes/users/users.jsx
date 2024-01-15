@@ -1,25 +1,38 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import { Link } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
 
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import deleteUser from "../../redux/actions/users/deleteUser";
+import updateUser from "../../redux/actions/users/updateUser";
 
 
 const Users = () => {
   const users = useSelector(state => state.users.allUsers);
-
-  console.log(users);
-
-
+  const dispatch = useDispatch();
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  console.log(users);
+
+  const onDelete = () => {
+    dispatch(deleteUser());
+  };
+
+  const onEdit = () => {
+    dispatch(updateUser());
+  };
 
   const columns = [
     {
@@ -105,6 +118,24 @@ const Users = () => {
         );
       },
     },
+    { field: 'delete', headerName: '', width: 50, renderCell: (params) => {
+      return (
+        <IconButton 
+          onClick={(e) => onDelete(e, params.row)}
+        >
+          <DeleteIcon/>
+        </IconButton>
+      );
+    } },
+    { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
+      return (
+        <IconButton
+          onClick={(e) => onEdit(e, params.row)}
+        >
+          <EditIcon/>
+        </IconButton>
+      );
+    } }
   ];
 
   return (

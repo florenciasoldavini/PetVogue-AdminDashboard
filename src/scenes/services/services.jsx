@@ -1,19 +1,36 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useTheme } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
-import { useTheme } from "@mui/material";
-import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import deleteService from "../../redux/actions/services/deleteService";
+import updateService from "../../redux/actions/services/deleteService";
 
 const Services = () => {
   const services = useSelector(state => state.services.allServices);
+  const dispatch = useDispatch();
 
-  console.log(services);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  console.log(services);
+
+
+  const onDelete = () => {
+    dispatch(deleteService());
+  };
+
+  const onEdit = () => {
+    dispatch(updateService());
+  };
 
   const columns = [
     {
@@ -57,6 +74,24 @@ const Services = () => {
       headerName: "Tipo de mascota",
       flex: 1,
     },
+    { field: 'delete', headerName: '', width: 50, renderCell: (params) => {
+      return (
+        <IconButton 
+          onClick={(e) => onDelete(e, params.row)}
+        >
+          <DeleteIcon/>
+        </IconButton>
+      );
+    } },
+    { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
+      return (
+        <IconButton
+          onClick={(e) => onEdit(e, params.row)}
+        >
+          <EditIcon/>
+        </IconButton>
+      );
+    } }
   ];
 
   return (
