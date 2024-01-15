@@ -26,8 +26,8 @@ const Users = () => {
 
   console.log(users);
 
-  const onDelete = () => {
-    dispatch(deleteUser());
+  const onDelete = (e, params) => {
+    dispatch(deleteUser(params.userID));
   };
 
   const onEdit = () => {

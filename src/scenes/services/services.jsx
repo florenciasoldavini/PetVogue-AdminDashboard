@@ -24,8 +24,8 @@ const Services = () => {
   console.log(services);
 
 
-  const onDelete = () => {
-    dispatch(deleteService());
+  const onDelete = (e, params) => {
+    dispatch(deleteService(params.serviceID));
   };
 
   const onEdit = () => {

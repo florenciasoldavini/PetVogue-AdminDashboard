@@ -23,8 +23,8 @@ const Products = () => {
 
   console.log(products);
 
-  const onDelete = () => {
-    dispatch(deleteProduct());
+  const onDelete = (e, params) => {
+    dispatch(deleteProduct(params.productID));
   };
 
   const onEdit = () => {

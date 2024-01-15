@@ -22,8 +22,8 @@ const Orders = () => {
 
   console.log(orders);
 
-  const onDelete = () => {
-    dispatch(deleteOrder());
+  const onDelete = (e, params) => {
+    dispatch(deleteOrder(params.orderID));
   };
 
   const onEdit = () => {

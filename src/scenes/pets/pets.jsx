@@ -22,8 +22,8 @@ const Pets = () => {
 
   console.log(pets);
 
-  const onDelete = () => {
-    dispatch(deletePet());
+  const onDelete = (e, params) => {
+    dispatch(deletePet(params.petID));
   };
 
   const onEdit = () => {
