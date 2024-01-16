@@ -10,11 +10,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import deleteUser from "../../redux/actions/users/deleteUser";
-import updateUser from "../../redux/actions/users/updateUser";
+import getUserById from "../../redux/actions/users/getUserById";
 
 
 const Users = () => {
@@ -31,9 +30,7 @@ const Users = () => {
   };
 
   const onEdit = (e, params) => {
-    console.log(e);
-    console.log(params);
-    dispatch(updateUser(params.userID));
+    dispatch(getUserById(params.userID));
   };
 
   const columns = [
@@ -123,7 +120,7 @@ const Users = () => {
     { field: 'delete', headerName: '', width: 50, renderCell: (params) => {
       return (
         <IconButton 
-          onClick={(e) => onDelete(e, params.row)} component={Link} to="/users/form/update"
+        onClick={(e) => onDelete(e, params.row)} 
         >
           <DeleteIcon/>
         </IconButton>
@@ -132,7 +129,7 @@ const Users = () => {
     { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
       return (
         <IconButton
-          onClick={(e) => onEdit(e, params.row)}
+          onClick={(e) => onEdit(e, params.row)} component={Link} to="/users/form/update" 
         >
           <EditIcon/>
         </IconButton>

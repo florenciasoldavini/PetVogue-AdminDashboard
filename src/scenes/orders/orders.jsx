@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import deleteOrder from "../../redux/actions/orders/deleteOrder";
-import updateOrder from "../../redux/actions/orders/updateOrder";
+import getOrderById from "../../redux/actions/orders/getOrderById";
 
 const Orders = () => {
   const orders = useSelector(state => state.orders.allOrders);
@@ -26,8 +26,8 @@ const Orders = () => {
     dispatch(deleteOrder(params.orderID));
   };
 
-  const onEdit = () => {
-    dispatch(updateOrder());
+  const onEdit = (e, params) => {
+    dispatch(getOrderById(params.orderID));
   };
 
   const columns = [
@@ -119,7 +119,7 @@ const Orders = () => {
     { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
       return (
         <IconButton
-          onClick={(e) => onEdit(e, params.row)}
+          onClick={(e) => onEdit(e, params.row)} component={Link} to="/orders/form/update" 
         >
           <EditIcon/>
         </IconButton>

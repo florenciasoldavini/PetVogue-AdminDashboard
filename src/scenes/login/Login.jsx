@@ -2,17 +2,18 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Link as useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { validateEmail, validateNonEmpty } from "./validations";
-import { useDispatch } from "react-redux";
-import { TextField, Button, Box } from "@mui/material";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { TextField, Button, Box, Link } from "@mui/material";
+import { useEffect, useState } from "react";
 import login from "../../redux/actions/login/login";
 import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);

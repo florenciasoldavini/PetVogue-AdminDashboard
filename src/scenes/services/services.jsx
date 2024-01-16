@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import deleteService from "../../redux/actions/services/deleteService";
-import updateService from "../../redux/actions/services/deleteService";
+import getServiceById from "../../redux/actions/services/getServiceById";
 
 const Services = () => {
   const services = useSelector(state => state.services.allServices);
@@ -28,8 +28,8 @@ const Services = () => {
     dispatch(deleteService(params.serviceID));
   };
 
-  const onEdit = () => {
-    dispatch(updateService());
+  const onEdit = (e, params) => {
+    dispatch(getServiceById(params.serviceID));
   };
 
   const columns = [
@@ -86,7 +86,7 @@ const Services = () => {
     { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
       return (
         <IconButton
-          onClick={(e) => onEdit(e, params.row)}
+          onClick={(e) => onEdit(e, params.row)} component={Link} to="/services/form/update" 
         >
           <EditIcon/>
         </IconButton>

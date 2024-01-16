@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import deletePet from "../../redux/actions/pets/deletePet";
-import updatePet from "../../redux/actions/pets/updatePet";
+import getPetById from "../../redux/actions/pets/getPetById";
 
 const Pets = () => {
   const pets = useSelector(state => state.pets.allPets);
@@ -26,8 +26,8 @@ const Pets = () => {
     dispatch(deletePet(params.petID));
   };
 
-  const onEdit = () => {
-    dispatch(updatePet());
+  const onEdit = (e, params) => {
+    dispatch(getPetById(params.petID));
   };
 
   const columns = [
@@ -99,7 +99,7 @@ const Pets = () => {
     { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
       return (
         <IconButton
-          onClick={(e) => onEdit(e, params.row)}
+          onClick={(e) => onEdit(e, params.row)} component={Link} to="/pets/form/update" 
         >
           <EditIcon/>
         </IconButton>

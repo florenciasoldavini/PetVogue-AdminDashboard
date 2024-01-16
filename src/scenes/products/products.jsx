@@ -11,8 +11,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import deleteProduct from "../../redux/actions/products/deleteProduct";
-import updateProduct from "../../redux/actions/products/updateProduct";
-
+import getProductById from "../../redux/actions/products/getProductById";
 
 const Products = () => {
   const products = useSelector(state => state.products.allProducts);
@@ -27,8 +26,8 @@ const Products = () => {
     dispatch(deleteProduct(params.productID));
   };
 
-  const onEdit = () => {
-    dispatch(updateProduct());
+  const onEdit = (e, params) => {
+    dispatch(getProductById(params.productID));
   };
 
   const columns = [
@@ -90,7 +89,7 @@ const Products = () => {
     { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
       return (
         <IconButton
-          onClick={(e) => onEdit(e, params.row)}
+          onClick={(e) => onEdit(e, params.row)} component={Link} to="/products/form/update" 
         >
           <EditIcon/>
         </IconButton>
