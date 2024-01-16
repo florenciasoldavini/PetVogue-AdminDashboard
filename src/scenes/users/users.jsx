@@ -30,8 +30,10 @@ const Users = () => {
     dispatch(deleteUser(params.userID));
   };
 
-  const onEdit = () => {
-    dispatch(updateUser());
+  const onEdit = (e, params) => {
+    console.log(e);
+    console.log(params);
+    dispatch(updateUser(params.userID));
   };
 
   const columns = [
@@ -121,7 +123,7 @@ const Users = () => {
     { field: 'delete', headerName: '', width: 50, renderCell: (params) => {
       return (
         <IconButton 
-          onClick={(e) => onDelete(e, params.row)}
+          onClick={(e) => onDelete(e, params.row)} component={Link} to="/users/form/update"
         >
           <DeleteIcon/>
         </IconButton>

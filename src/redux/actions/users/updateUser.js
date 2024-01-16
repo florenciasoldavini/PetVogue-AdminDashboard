@@ -4,7 +4,7 @@ import setUserDetail from "../../slices/usersSlice"
 const updateUser = (id) => {
     const endpoint = "https://petvogue.onrender.com/users/put/" + id
 
-    return async () => {
+    return async (dispatch) => {
         try {
             const response = await axios.put(endpoint);
             let data = response.data;

@@ -4,7 +4,7 @@ import setOrderDetail from "../../slices/ordersSlice"
 const updateOrder = (id) => {
     const endpoint = "https://petvogue.onrender.com/orders/put/" + id
 
-    return async () => {
+    return async (dispatch) => {
         try {
             const response = await axios.put(endpoint);
             let data = response.data;
