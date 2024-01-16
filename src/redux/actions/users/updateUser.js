@@ -1,17 +1,12 @@
 import axios from "axios";
-import setUserDetail from "../../slices/usersSlice"
 
-const updateUser = (id) => {
-    const endpoint = "https://petvogue.onrender.com/users/put/" + id
+const updateUser = (userId, user) => {
+    const endpoint = "https://petvogue.onrender.com/users/put/" + userId
 
-    return async (dispatch) => {
+    return async () => {
         try {
-            const response = await axios.put(endpoint);
-            let data = response.data;
+            await axios.put(endpoint, user);
 
-            console.log(data)
-
-            return dispatch(setUserDetail(data));
         } catch (error) {
             console.log(error);
         }

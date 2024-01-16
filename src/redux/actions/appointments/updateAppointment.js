@@ -1,16 +1,12 @@
 import axios from "axios";
-import setAppointmentDetail from "../../slices/appointmentsSlice"
 
-const updateAppointment = (id) => {
-    const endpoint = "https://petvogue.onrender.com/appointments/put/" + id
-    return async (dispatch) => {
+const updateAppointment = (appointmentID, appointment) => {
+    const endpoint = "https://petvogue.onrender.com/appointments/put/" + appointmentID
+
+    return async () => {
         try {
-            const response = await axios.put(endpoint);
-            let data = response.data;
+            await axios.put(endpoint, appointment);
 
-            console.log(data)
-
-            return dispatch(setAppointmentDetail(data));
         } catch (error) {
             console.log(error);
         }

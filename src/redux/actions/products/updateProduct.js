@@ -1,17 +1,12 @@
 import axios from "axios";
-import setProductDetail from "../../slices/productsSlice"
 
-const updateProduct = (id) => {
-    const endpoint = "https://petvogue.onrender.com/products/put/" + id
+const updateProduct = (productID, product) => {
+    const endpoint = "https://petvogue.onrender.com/products/put/" + productID
 
-    return async (dispatch) => {
+    return async () => {
         try {
-            const response = await axios.put(endpoint);
-            let data = response.data;
+            await axios.put(endpoint, product);
 
-            console.log(data)
-
-            return dispatch(setProductDetail(data));
         } catch (error) {
             console.log(error);
         }

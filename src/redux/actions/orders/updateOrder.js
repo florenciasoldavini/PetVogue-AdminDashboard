@@ -1,17 +1,12 @@
 import axios from "axios";
-import setOrderDetail from "../../slices/ordersSlice"
 
-const updateOrder = (id) => {
-    const endpoint = "https://petvogue.onrender.com/orders/put/" + id
+const updateOrder = (orderID, order) => {
+    const endpoint = "https://petvogue.onrender.com/orders/put/" + orderID
 
-    return async (dispatch) => {
+    return async () => {
         try {
-            const response = await axios.put(endpoint);
-            let data = response.data;
-
-            console.log(data)
-
-            return dispatch(setOrderDetail(data));
+            await axios.put(endpoint, order);
+     
         } catch (error) {
             console.log(error);
         }
