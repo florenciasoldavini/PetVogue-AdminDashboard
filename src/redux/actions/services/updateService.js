@@ -1,12 +1,17 @@
 import axios from "axios";
+import setServiceDetail from "../../slices/servicesSlice"
 
-const updateService = () => {
-    const endpoint = "https://petvogue.onrender.com/services/put/"
+const updateService = (id) => {
+    const endpoint = "https://petvogue.onrender.com/services/put/" + id
 
     return async () => {
         try {
-            await axios.put(endpoint);
+            const response = await axios.put(endpoint);
+            let data = response.data;
 
+            console.log(data)
+
+            return dispatch(setServiceDetail(data));
         } catch (error) {
             console.log(error);
         }
