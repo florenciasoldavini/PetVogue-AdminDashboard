@@ -1,12 +1,17 @@
 import axios from "axios";
 import { setPetDetail } from "../../slices/petsSlice"
 
-const getPetById = (id) => {
-    const endpoint = "https://petvogue.onrender.com/pets/get/" + id
+const getPetById = (petID) => {
+    const endpoint = "https://petvogue.onrender.com/pets/get/" 
 
     return async (dispatch) => {
         try {
-            const response = await axios.get(endpoint);
+            const response = await axios.post(endpoint, {
+                filters: {
+                  petID_filter: petID,
+                }
+            });
+            
             let data = response.data; 
 
             return dispatch(setPetDetail(data));
