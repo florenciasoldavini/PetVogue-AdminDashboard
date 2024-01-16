@@ -4,20 +4,21 @@ import { useTheme } from "@mui/material";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from "@mui/icons-material/Delete";
+import RestoreIcon from "@mui/icons-material/Restore";
+import EditIcon from "@mui/icons-material/Edit";
 
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import deleteUser from "../../redux/actions/users/deleteUser";
+import restoreUser from "../../redux/actions/users/restoreUser";
 import getUserById from "../../redux/actions/users/getUserById";
 
-
 const Users = () => {
-  const users = useSelector(state => state.users.allUsers);
+  const users = useSelector((state) => state.users.allUsers);
   const dispatch = useDispatch();
 
   const theme = useTheme();
@@ -27,6 +28,10 @@ const Users = () => {
 
   const onDelete = (e, params) => {
     dispatch(deleteUser(params.userID));
+  };
+
+  const onRestore = (e, params) => {
+    dispatch(restoreUser(params.userID));
   };
 
   const onEdit = (e, params) => {
@@ -87,6 +92,32 @@ const Users = () => {
       flex: 1,
     },
     {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      renderCell: ({ row: { status } }) => {
+        return (
+          <Box
+            width="60%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={
+              status === "enabled"
+                ? colors.greenAccent[600]
+                : colors.greenAccent[800]
+            }
+            borderRadius="4px"
+          >
+            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+              {status}
+            </Typography>
+          </Box>
+        );
+      },
+    },
+    {
       field: "systemRole",
       headerName: "Role",
       flex: 1,
@@ -117,34 +148,58 @@ const Users = () => {
         );
       },
     },
-    { field: 'delete', headerName: '', width: 50, renderCell: (params) => {
-      return (
-        <IconButton 
-        onClick={(e) => onDelete(e, params.row)} 
-        >
-          <DeleteIcon/>
-        </IconButton>
-      );
-    } },
-    { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
-      return (
-        <IconButton
-          onClick={(e) => onEdit(e, params.row)} component={Link} to="/users/form/update" 
-        >
-          <EditIcon/>
-        </IconButton>
-      );
-    } }
+    {
+      field: "delete",
+      headerName: "Eliminar",
+      width: 50,
+      renderCell: (params) => {
+        return (
+          <IconButton onClick={(e) => onDelete(e, params.row)}>
+            <DeleteIcon />
+          </IconButton>
+        );
+      },
+    },
+    {
+      field: "restore",
+      headerName: "Restaurar",
+      width: 50,
+      renderCell: (params) => {
+        return (
+          <IconButton onClick={(e) => onRestore(e, params.row)}>
+            <RestoreIcon />
+          </IconButton>
+        );
+      },
+    },
+    {
+      field: "edit",
+      headerName: "Editar",
+      width: 50,
+      renderCell: (params) => {
+        return (
+          <IconButton
+            onClick={(e) => onEdit(e, params.row)}
+            component={Link}
+            to="/users/form/update"
+          >
+            <EditIcon />
+          </IconButton>
+        );
+      },
+    },
   ];
 
   return (
-
     <Box m="20px">
-      <Header
-        title="USUARIOS"
-      />
+      <Header title="USUARIOS" />
       <Box display="flex" justifyContent="end" mt="20px">
-        <Button component={Link} to="/users/form/create" color="secondary" variant="contained">
+        <Button
+          component={Link}
+          to="/users/form/create"
+          color="secondary"
+          variant="contained"
+        >
           Crear nuevo usuario
         </Button>
       </Box>

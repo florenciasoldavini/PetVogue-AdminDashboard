@@ -158,7 +158,7 @@ const Sidebar = () => {
                   selected={selected}
                   setSelected={setSelected}
                 />
-                <Item
+                {/* <Item
                   title="Mascotas"
                   to="/pets"
                   icon={<PetsIcon />}
@@ -171,7 +171,7 @@ const Sidebar = () => {
                   icon={<MedicalServicesIcon />}
                   selected={selected}
                   setSelected={setSelected}
-                />
+                /> */}
                 <Item
                   title="Productos"
                   to="/products"
