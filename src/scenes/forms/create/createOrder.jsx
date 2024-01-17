@@ -1,19 +1,26 @@
 import { Box, Button, TextField } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import { Formik } from "formik";
 import * as yup from "yup";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
 
+import { useDispatch } from 'react-redux';
+import createOrder from "../../../redux/actions/orders/createOrder"
+
 const CreateOrder = () => {
+  const dispatch = useDispatch();
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
     console.log(values);
+    dispatch(createOrder(values));
   };
 
   return (
     <Box m="20px">
-      <Header title="CREAR NUEVA ORDEN DE COMPRA"  />
+      <Header title="CREAR NUEVA ORDEN DE COMPRA" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -44,81 +51,107 @@ const CreateOrder = () => {
                 label="Nombre"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                value={values.name}
+                name="name"
+                error={!!touched.name && !!errors.name}
+                helperText={touched.name && errors.name}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Apellido"
+                label="Descripción"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                value={values.description}
+                name="description"
+                error={!!touched.description && !!errors.description}
+                helperText={touched.description && errors.description}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Email"
+                label="Tipo"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
+                value={values.type}
+                name="type"
+                error={!!touched.type && !!errors.type}
+                helperText={touched.type && errors.type}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Contact Number"
+                label="Precio"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
+                value={values.price}
+                name="price"
+                error={!!touched.price && !!errors.price}
+                helperText={touched.price && errors.price}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Address 1"
+                label="Imagen"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                value={values.image}
+                name="image"
+                error={!!touched.image && !!errors.image}
+                helperText={touched.image && errors.image}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Address 2"
+                label="Stock"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
+                value={values.stock}
+                name="stock"
+                error={!!touched.stock && !!errors.stock}
+                helperText={touched.stock && errors.stock}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Marca"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.brand}
+                name="brand"
+                error={!!touched.brand && !!errors.brand}
+                helperText={touched.brand && errors.brand}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Stock"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.stock}
+                name="stock"
+                error={!!touched.stock && !!errors.stock}
+                helperText={touched.stock && errors.stock}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Crear 
+                Crear
               </Button>
             </Box>
           </form>
@@ -143,12 +176,14 @@ const checkoutSchema = yup.object().shape({
   address2: yup.string().required("required"),
 });
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
+  name: "",
+  description: "",
+  type: "",
+  price: "",
+  image: "",
+  stock: "",
+  brand: "",
+  status: "",
 };
 
 export default CreateOrder;
