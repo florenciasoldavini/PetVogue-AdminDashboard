@@ -2,9 +2,9 @@ import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 
-const CreateUser = () => {
+const CreateProduct = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
@@ -13,7 +13,7 @@ const CreateUser = () => {
 
   return (
     <Box m="20px">
-      <Header title="CREAR NUEVO USUARIO"  />
+      <Header title="CREAR NUEVO PRODUCTO"  />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -41,7 +41,7 @@ const CreateUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="First Name"
+                label="Nombre"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.firstName}
@@ -54,7 +54,7 @@ const CreateUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Last Name"
+                label="Apellido"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.lastName}
@@ -151,4 +151,4 @@ const initialValues = {
   address2: "",
 };
 
-export default CreateUser;
+export default CreateProduct;

@@ -1,23 +1,40 @@
-import { Box } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useTheme } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
-import { useTheme } from "@mui/material";
 
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import deletePet from "../../redux/actions/pets/deletePet";
+import getPetById from "../../redux/actions/pets/getPetById";
 
 const Pets = () => {
   const pets = useSelector(state => state.pets.allPets);
-
-  console.log(pets);
+  const dispatch = useDispatch();
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  console.log(pets);
+
+  const onDelete = (e, params) => {
+    dispatch(deletePet(params.petID));
+  };
+
+  const onEdit = (e, params) => {
+    dispatch(getPetById(params.petID));
+  };
+
   const columns = [
-    { field: "petID", 
-    headerName: "ID", 
-    flex: 0.5 
+    {
+      field: "petID",
+      headerName: "ID",
+      flex: 0.5
     },
     {
       field: "name",
@@ -61,15 +78,33 @@ const Pets = () => {
       flex: 1,
     },
     {
-    field: "image",
-    headerName: "Foto",
-    flex: 1,
-  },
-  {
-    field: "status",
-    headerName: "Estado",
-    flex: 1,
-  },
+      field: "image",
+      headerName: "Foto",
+      flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Estado",
+      flex: 1,
+    },
+    { field: 'delete', headerName: '', width: 50, renderCell: (params) => {
+      return (
+        <IconButton 
+          onClick={(e) => onDelete(e, params.row)}
+        >
+          <DeleteIcon/>
+        </IconButton>
+      );
+    } },
+    { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
+      return (
+        <IconButton
+          onClick={(e) => onEdit(e, params.row)} component={Link} to="/pets/form/update" 
+        >
+          <EditIcon/>
+        </IconButton>
+      );
+    } }
   ];
 
   return (
@@ -77,6 +112,11 @@ const Pets = () => {
       <Header
         title="MASCOTAS"
       />
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button component={Link} to="/pets/form/create" color="secondary" variant="contained">
+          Crear nueva mascota
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -110,8 +150,8 @@ const Pets = () => {
         }}
       >
         <DataGrid
-        checkboxSelection
-        getRowId={(row) =>  row.petID}
+          checkboxSelection
+          getRowId={(row) => row.petID}
           rows={pets.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}

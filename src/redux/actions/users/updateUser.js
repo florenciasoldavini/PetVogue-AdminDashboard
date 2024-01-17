@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const updateUser = () => {
-    const endpoint = "https://petvogue.onrender.com/users/put/"
+const updateUser = (userId, user) => {
+    const endpoint = "https://petvogue.onrender.com/users/put/" + userId
 
     return async () => {
         try {
-            await axios.put(endpoint);
+            await axios.put(endpoint, user);
 
         } catch (error) {
             console.log(error);

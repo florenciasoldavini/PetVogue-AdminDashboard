@@ -1,12 +1,16 @@
 import axios from "axios";
 import { setAppointmentDetail } from "../../slices/appointmentsSlice"
 
-const getAppointmentById = (id) => {
-    const endpoint = "https://petvogue.onrender.com/appointments/get/" + id
+const getAppointmentById = (appointmentID) => {
+    const endpoint = "https://petvogue.onrender.com/appointments/get/" 
 
     return async (dispatch) => {
         try {
-            const response = await axios.get(endpoint);
+            const response = await axios.post(endpoint, {
+                filters: {
+                  appointmentID_filter: appointmentID,
+                }
+            });
             let data = response.data; 
 
             return dispatch(setAppointmentDetail(data));

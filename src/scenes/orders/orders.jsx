@@ -1,35 +1,55 @@
-import { Box,  } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useTheme } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
-import { useTheme } from "@mui/material";
 
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import deleteOrder from "../../redux/actions/orders/deleteOrder";
+import getOrderById from "../../redux/actions/orders/getOrderById";
 
 const Orders = () => {
   const orders = useSelector(state => state.orders.allOrders);
-
-  console.log(orders);
+  const dispatch = useDispatch();
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  console.log(orders);
+
+  const onDelete = (e, params) => {
+    dispatch(deleteOrder(params.orderID));
+  };
+
+  const onEdit = (e, params) => {
+    dispatch(getOrderById(params.orderID));
+  };
+
   const columns = [
-    { field: "orderID", 
-    headerName: "orderID", 
-    flex: 1
+    {
+      field: "orderID",
+      headerName: "orderID",
+      flex: 1
     },
-    { field: "userID", 
-    headerName: "userID", 
-    flex: 1
+    {
+      field: "userID",
+      headerName: "userID",
+      flex: 1
     },
-    { field: "productID", 
-    headerName: "productID", 
-    flex: 1 
+    {
+      field: "productID",
+      headerName: "productID",
+      flex: 1
     },
-    { field: "serviceID", 
-    headerName: "serviceID", 
-    flex: 1
+    {
+      field: "serviceID",
+      headerName: "serviceID",
+      flex: 1
     },
     {
       field: "date",
@@ -87,6 +107,24 @@ const Orders = () => {
       headerName: "mp_external_reference",
       flex: 1,
     },
+    { field: 'delete', headerName: '', width: 50, renderCell: (params) => {
+      return (
+        <IconButton 
+          onClick={(e) => onDelete(e, params.row)}
+        >
+          <DeleteIcon/>
+        </IconButton>
+      );
+    } },
+    { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
+      return (
+        <IconButton
+          onClick={(e) => onEdit(e, params.row)} component={Link} to="/orders/form/update" 
+        >
+          <EditIcon/>
+        </IconButton>
+      );
+    } }
   ];
 
   return (
@@ -94,6 +132,11 @@ const Orders = () => {
       <Header
         title="ORDENES DE COMPRA"
       />
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button component={Link} to="/orders/form/create" color="secondary" variant="contained">
+          Crear nueva orden de compra
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -127,8 +170,8 @@ const Orders = () => {
         }}
       >
         <DataGrid
-        checkboxSelection
-        getRowId={(row) =>  row.orderID}
+          checkboxSelection
+          getRowId={(row) => row.orderID}
           rows={orders.rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}

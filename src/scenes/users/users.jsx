@@ -1,30 +1,62 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RestoreIcon from "@mui/icons-material/Restore";
+import EditIcon from "@mui/icons-material/Edit";
+import toast from "react-hot-toast";
 
-import { useSelector } from 'react-redux';
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
 
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import getAllUsers from "../../redux/actions/users/getAllUsers";
+import deleteUser from "../../redux/actions/users/deleteUser";
+import restoreUser from "../../redux/actions/users/restoreUser";
+import getUserById from "../../redux/actions/users/getUserById";
 
 const Users = () => {
-  const users = useSelector(state => state.users.allUsers);
-
-  console.log(users);
-
-
+  const users = useSelector((state) => state.users.allUsers);
+  const dispatch = useDispatch();
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  console.log(users);
+
+  const onDelete = async (e, params) => {
+    const response = await dispatch(deleteUser(params.userID));
+    if (response?.response?.data?.message) {
+      toast.error(response.response.data.message);
+    } else {
+      dispatch(getAllUsers());
+      toast.success("Usuario bloqueado exitosamente");
+    }
+  };
+
+  const onRestore = async (e, params) => {
+    const response = await dispatch(restoreUser(params.userID));
+    if (response?.response?.data?.message) {
+      toast.error(response.response.data.message);
+    } else {
+      dispatch(getAllUsers());
+      toast.success("Usuario desbloqueado exitosamente");
+    }
+  };
+
+  const onEdit = (e, params) => {
+    dispatch(getUserById(params.userID));
+  };
 
   const columns = [
     {
       field: "userID",
       headerName: "ID",
-      flex: 0.5
+      flex: 0.5,
     },
     {
       field: "photo",
@@ -74,6 +106,32 @@ const Users = () => {
       flex: 1,
     },
     {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      renderCell: ({ row: { status } }) => {
+        return (
+          <Box
+            width="60%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={
+              status === "enabled"
+                ? colors.greenAccent[600]
+                : colors.greenAccent[800]
+            }
+            borderRadius="4px"
+          >
+            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+              {status}
+            </Typography>
+          </Box>
+        );
+      },
+    },
+    {
       field: "systemRole",
       headerName: "Role",
       flex: 1,
@@ -89,8 +147,8 @@ const Users = () => {
               systemRole === "admin"
                 ? colors.greenAccent[600]
                 : systemRole === "manager"
-                  ? colors.greenAccent[700]
-                  : colors.greenAccent[700]
+                ? colors.greenAccent[700]
+                : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
@@ -104,13 +162,61 @@ const Users = () => {
         );
       },
     },
+    {
+      field: "delete",
+      headerName: "Eliminar",
+      width: 50,
+      renderCell: (params) => {
+        return (
+          <IconButton onClick={(e) => onDelete(e, params.row)}>
+            <DeleteIcon />
+          </IconButton>
+        );
+      },
+    },
+    {
+      field: "restore",
+      headerName: "Restaurar",
+      width: 50,
+      renderCell: (params) => {
+        return (
+          <IconButton onClick={(e) => onRestore(e, params.row)}>
+            <RestoreIcon />
+          </IconButton>
+        );
+      },
+    },
+    {
+      field: "edit",
+      headerName: "Editar",
+      width: 50,
+      renderCell: (params) => {
+        return (
+          <IconButton
+            onClick={(e) => onEdit(e, params.row)}
+            component={Link}
+            to="/users/form/update"
+          >
+            <EditIcon />
+          </IconButton>
+        );
+      },
+    },
   ];
 
   return (
     <Box m="20px">
-      <Header
-        title="USUARIOS"
-      />
+      <Header title="USUARIOS" />
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button
+          component={Link}
+          to="/users/form/create"
+          color="secondary"
+          variant="contained"
+        >
+          Crear nuevo usuario
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
