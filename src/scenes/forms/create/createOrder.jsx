@@ -48,27 +48,79 @@ const CreateOrder = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Nombre"
+                label="UserID"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.name}
-                name="name"
-                error={!!touched.name && !!errors.name}
-                helperText={touched.name && errors.name}
+                value={values.userID}
+                name="userID"
+                error={!!touched.userID && !!errors.userID}
+                helperText={touched.userID && errors.userID}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Descripción"
+                label="productID"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.description}
-                name="description"
-                error={!!touched.description && !!errors.description}
-                helperText={touched.description && errors.description}
+                value={values.productID}
+                name="productID"
+                error={!!touched.productID && !!errors.productID}
+                helperText={touched.productID && errors.productID}
                 sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Fecha"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.date}
+                name="date"
+                error={!!touched.date && !!errors.date}
+                helperText={touched.date && errors.date}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Precio por unidad"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.rate}
+                name="rate"
+                error={!!touched.rate && !!errors.rate}
+                helperText={touched.rate && errors.rate}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Cantidad"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.quantity}
+                name="quantity"
+                error={!!touched.quantity && !!errors.quantity}
+                helperText={touched.quantity && errors.quantity}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Monto total"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.amount}
+                name="amount"
+                error={!!touched.amount && !!errors.amount}
+                helperText={touched.amount && errors.amount}
+                sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
@@ -87,65 +139,13 @@ const CreateOrder = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Precio"
+                label="Estado"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.price}
-                name="price"
-                error={!!touched.price && !!errors.price}
-                helperText={touched.price && errors.price}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Imagen"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.image}
-                name="image"
-                error={!!touched.image && !!errors.image}
-                helperText={touched.image && errors.image}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Stock"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.stock}
-                name="stock"
-                error={!!touched.stock && !!errors.stock}
-                helperText={touched.stock && errors.stock}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Marca"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.brand}
-                name="brand"
-                error={!!touched.brand && !!errors.brand}
-                helperText={touched.brand && errors.brand}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Stock"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.stock}
-                name="stock"
-                error={!!touched.stock && !!errors.stock}
-                helperText={touched.stock && errors.stock}
+                value={values.status}
+                name="status"
+                error={!!touched.status && !!errors.status}
+                helperText={touched.status && errors.status}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
@@ -165,24 +165,23 @@ const phoneRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
+  userID: yup.string().required("*Este campo es obligatorio"),
+  productID: yup.string().required("*Este campo es obligatorio"),
+  date:yup.string().required("*Este campo es obligatorio"),
+  rate: yup.string().required("*Este campo es obligatorio"),
+  quantity: yup.string().required("*Este campo es obligatorio"),
+  amount: yup.string().required("*Este campo es obligatorio"),
+  type: yup.string().required("*Este campo es obligatorio"),
+  status: yup.string().required("*Este campo es obligatorio")
 });
 const initialValues = {
-  name: "",
-  description: "",
+  userID: "",
+  productID: "",
+  date: "",
+  rate: "",
+  quantity: "",
+  amount: "",
   type: "",
-  price: "",
-  image: "",
-  stock: "",
-  brand: "",
   status: "",
 };
 
