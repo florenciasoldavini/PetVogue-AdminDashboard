@@ -7,12 +7,14 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RestoreIcon from "@mui/icons-material/Restore";
 import EditIcon from "@mui/icons-material/Edit";
+import toast from "react-hot-toast";
 
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import getAllUsers from "../../redux/actions/users/getAllUsers";
 import deleteUser from "../../redux/actions/users/deleteUser";
 import restoreUser from "../../redux/actions/users/restoreUser";
 import getUserById from "../../redux/actions/users/getUserById";
@@ -26,12 +28,24 @@ const Users = () => {
 
   console.log(users);
 
-  const onDelete = (e, params) => {
-    dispatch(deleteUser(params.userID));
+  const onDelete = async (e, params) => {
+    const response = await dispatch(deleteUser(params.userID));
+    if (response?.response?.data?.message) {
+      toast.error(response.response.data.message);
+    } else {
+      dispatch(getAllUsers());
+      toast.success("Usuario bloqueado exitosamente");
+    }
   };
 
-  const onRestore = (e, params) => {
-    dispatch(restoreUser(params.userID));
+  const onRestore = async (e, params) => {
+    const response = await dispatch(restoreUser(params.userID));
+    if (response?.response?.data?.message) {
+      toast.error(response.response.data.message);
+    } else {
+      dispatch(getAllUsers());
+      toast.success("Usuario desbloqueado exitosamente");
+    }
   };
 
   const onEdit = (e, params) => {

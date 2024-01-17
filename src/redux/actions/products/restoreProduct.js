@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const restoreUser = (id) => {
-  const endpoint = "https://petvogue.onrender.com/users/restore/" + id;
+const restoreProduct = (id) => {
+  const endpoint = "https://petvogue.onrender.com/products/restore/" + id;
 
   return async () => {
     try {
@@ -13,4 +13,4 @@ const restoreUser = (id) => {
   };
 };
 
-export default restoreUser;
+export default restoreProduct;

@@ -30,7 +30,6 @@ function Login() {
 
   const handleLogin = async () => {
     const response = await dispatch(login({ email, password }));
-    console.log("RESPONSE", response);
     if (response?.response?.data?.error) {
       toast.error(response.response.data.error);
     } else {

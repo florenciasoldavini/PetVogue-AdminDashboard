@@ -169,6 +169,7 @@ const Sidebar = () => {
                   title="Servicios"
                   to="/services"
                   icon={<MedicalServicesIcon />}
+                  icon={<MedicalServicesIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 /> */}
