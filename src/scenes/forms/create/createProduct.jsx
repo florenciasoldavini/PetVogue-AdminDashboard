@@ -20,7 +20,7 @@ const CreateProduct = () => {
 
   return (
     <Box m="20px">
-      <Header title="CREAR NUEVA ORDEN DE COMPRA" />
+      <Header title="CREAR NUEVO PRODUCTO" />
 
       <Formik
         onSubmit={handleFormSubmit}
