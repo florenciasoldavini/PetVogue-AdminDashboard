@@ -174,6 +174,7 @@ const checkoutSchema = yup.object().shape({
   type: yup.string().required("*Este campo es obligatorio"),
   status: yup.string().required("*Este campo es obligatorio")
 });
+
 const initialValues = {
   userID: "",
   productID: "",
