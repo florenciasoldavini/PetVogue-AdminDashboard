@@ -4,11 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import updateUser from "../../../redux/actions/users/updateUser";
 import PhotoUpload from "../../../components/photoUpload";
 
-const UpdateUser = ({ closeDialog }) => {
+const UpdateUser = () => {
   const dispatch = useDispatch();
 
   const currentUser = useSelector((state) => state.users.userDetail.rows[0]);
-  //const users = useSelector((state)=> state.users[0].user)
 
   console.log(currentUser, "currentUser💚");
 
@@ -17,7 +16,6 @@ const UpdateUser = ({ closeDialog }) => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [photo, setPhoto] = useState("");
-  //const [birth, setBirth] = useState('');
   const [dni, setDni] = useState("");
   const [systemRole, setSystemRole] = useState("");
 
@@ -28,7 +26,6 @@ const UpdateUser = ({ closeDialog }) => {
       setPhone(currentUser.phone || "");
       setAddress(currentUser.address || "");
       setPhoto(currentUser.photo || "");
-      //setBirth(currentUser.birth || '');
       setDni(currentUser.dni || "");
       setSystemRole(currentUser.systemRole || "");
     }
@@ -49,7 +46,6 @@ const UpdateUser = ({ closeDialog }) => {
     dispatch(updateUser(currentUser.userID, userData)).catch((error) => {
       console.error("Failed to update user: ", error);
     });
-    closeDialog();
   };
 
   const handleConfirmEdit = () => {
