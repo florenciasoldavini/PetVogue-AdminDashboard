@@ -56,44 +56,44 @@ const Users = () => {
     {
       field: "userID",
       headerName: "ID",
-      flex: 0.5,
+      flex: 3,
     },
     {
       field: "photo",
       headerName: "Foto",
-      flex: 0.5,
+      flex: 1,
     },
     {
       field: "firstName",
       headerName: "Nombre",
-      flex: 1,
+      flex: 1.5,
       cellClassName: "name-column--cell",
     },
     {
       field: "lastName",
       headerName: "Apellido",
-      flex: 1,
+      flex: 1.5,
       cellClassName: "name-column--cell",
     },
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      flex: 3,
     },
     {
       field: "password",
       headerName: "Contraseña",
-      flex: 1,
+      flex: 2,
     },
     {
       field: "phone",
       headerName: "Celular",
-      flex: 1,
+      flex: 2,
     },
     {
       field: "address",
       headerName: "Domicilio",
-      flex: 1,
+      flex: 3,
     },
     {
       field: "birth",
@@ -124,7 +124,7 @@ const Users = () => {
             }
             borderRadius="4px"
           >
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+            <Typography color={colors.grey[100]} sx={{ ml: "10px" }}>
               {status}
             </Typography>
           </Box>
@@ -147,8 +147,8 @@ const Users = () => {
               systemRole === "admin"
                 ? colors.greenAccent[600]
                 : systemRole === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
+                  ? colors.greenAccent[700]
+                  : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
@@ -218,6 +218,7 @@ const Users = () => {
         </Button>
       </Box>
       <Box
+        
         m="40px 0 0 0"
         height="75vh"
         sx={{
@@ -250,6 +251,8 @@ const Users = () => {
         }}
       >
         <DataGrid
+          sx={{ overflowX: 'scroll' }}
+          width="100%"
           checkboxSelection
           getRowId={(row) => row.userID}
           rows={users.rows}
