@@ -2,10 +2,14 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import updateUser from "../../../redux/actions/users/updateUser";
+import getAllUsers from "../../../redux/actions/users/getAllUsers";
 import PhotoUpload from "../../../components/photoUpload";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const UpdateUser = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const currentUser = useSelector((state) => state.users.userDetail.rows[0]);
 
@@ -33,7 +37,6 @@ const UpdateUser = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Perro");
     const userData = {
       firstName,
       lastName,
@@ -46,10 +49,9 @@ const UpdateUser = () => {
     dispatch(updateUser(currentUser.userID, userData)).catch((error) => {
       console.error("Failed to update user: ", error);
     });
-  };
-
-  const handleConfirmEdit = () => {
-    console.log("Gato");
+    navigate("/users");
+    navigate(0);
+    toast.success("Usuario editado exitosamente!");
   };
 
   return (
@@ -106,10 +108,10 @@ const UpdateUser = () => {
         <TextField
           label="Rol del sistema"
           value={systemRole}
-          onChange={(e) => setDni(e.target.value)}
+          onChange={(e) => setSystemRole(e.target.value)}
         />
         <Button variant="contained" color="primary" type="submit">
-          Guardar cambios🐾
+          Guardar cambios
         </Button>
       </Box>
     </form>

@@ -1,181 +1,124 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
 import updateProduct from "../../../redux/actions/products/updateProduct";
 import PhotoUpload from "../../../components/photoUpload";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const UpdateProduct = () => {
   const dispatch = useDispatch();
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const navigate = useNavigate();
+
   const currentProduct = useSelector(
     (state) => state.products.productDetail.rows[0]
   );
-  const currentProductID = useSelector(
-    (state) => state.products.productDetail.rows[0].productID
-  );
-  console.log("current product", currentProduct);
 
-  const [photo, setPhoto] = useState(currentProduct.image || "");
+  const [name, setName] = useState("");
+  const [brand, setBrand] = useState("");
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState("");
+  const [price, setPrice] = useState(null);
+  const [stock, setStock] = useState(null);
+  const [image, setImage] = useState("");
+  const [photo, setPhoto] = useState("");
 
-  const [formValues, setFormValues] = useState({
-    name: currentProduct.name || "",
-    brand: currentProduct.brand || "",
-    description: currentProduct.description || "",
-    type: currentProduct.type || "",
-    price: currentProduct.price || "",
-    image: currentProduct.image || "",  
-    stock: currentProduct.stock || "",
-  });
+  useEffect(() => {
+    if (currentProduct) {
+      setName(currentProduct.name || "");
+      setBrand(currentProduct.brand || "");
+      setDescription(currentProduct.description || "");
+      setType(currentProduct.type || "");
+      setPrice(currentProduct.price || null);
+      setStock(currentProduct.stock || null);
+      setPhoto(currentProduct.image || "");
+    }
+  }, [currentProduct]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
-
-  const handleFormSubmit = (formValues) => {
-    formValues.price = parseInt(formValues.price, 10);
-    formValues.stock = parseInt(formValues.stock, 10);
-    formValues.image = photo;
-  
-    dispatch(updateProduct(currentProductID, formValues));
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const productData = {
+      name,
+      brand,
+      description,
+      type,
+      price,
+      stock,
+      image: photo
+    };
+    dispatch(updateProduct(currentProduct.productID, productData)).catch(
+      (error) => {
+        console.error("Failed to update product: ", error);
+      }
+    );
+    navigate("/products");
+    navigate(0);
+    toast.success("Producto editado exitosamente!");
   };
 
   return (
-    <Box m="20px">
-      <Header title="MODIFICAR PRODUCTO" />
-
-      <Formik onSubmit={handleFormSubmit} initialValues={formValues}>
-        {({ values, errors, touched, handleBlur, handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Nombre"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={formValues.name}
-                name="name"
-                error={!!touched.name && !!errors.name}
-                helperText={touched.name && errors.name}
-                sx={{ gridColumn: "span 2" }}
-              ></TextField>
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Marca"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={formValues.brand}
-                name="brand"
-                error={!!touched.brand && !!errors.brand}
-                helperText={touched.brand && errors.brand}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Descripcion"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={formValues.description}
-                name="description"
-                error={!!touched.description && !!errors.description}
-                helperText={touched.description && errors.description}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Tipo"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={formValues.type}
-                name="type"
-                error={!!touched.type && !!errors.type}
-                helperText={touched.type && errors.type}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Precio"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={formValues.price}
-                name="price"
-                error={!!touched.price && !!errors.price}
-                helperText={touched.price && errors.price}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <PhotoUpload photo={photo} setPhoto={setPhoto} />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Stock"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={formValues.stock}
-                name="stock"
-                error={!!touched.stock && !!errors.stock}
-                helperText={touched.stock && errors.stock}
-                sx={{ gridColumn: "span 4" }}
-              />
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Actualizar
-              </Button>
-            </Box>
-          </form>
-        )}
-      </Formik>
-    </Box>
-  );
-};
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-// const checkoutSchema = yup.object().shape({
-//   firstName: yup.string().required("required"),
-//   lastName: yup.string().required("required"),
-//   email: yup.string().email("invalid email").required("required"),
-//   contact: yup
-//     .string()
-//     .matches(phoneRegExp, "Phone number is not valid")
-//     .required("required"),
-//   address1: yup.string().required("required"),
-//   address2: yup.string().required("required"),
-// });
-const initialValues = {
-  name: "",
-  description: "",
-  type: "",
-  price: "",
-  image: "",
-  stock: "",
-  brand: "",
+    <form onSubmit={handleSubmit}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          maxWidth: 400,
+          margin: "auto",
+        }}
+      >
+        <Typography
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            maxWidth: 400,
+            margin: "auto",
+          }}
+        >
+          Editar la informacion de {currentProduct.name}
+        </Typography>
+        <PhotoUpload photo={photo} setPhoto={setPhoto} />
+        <TextField
+          label="Nombre"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <TextField
+          label="Marca"
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+        />
+        <TextField
+          label="Descripcion"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <TextField
+          label="Tipo"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        />
+        <TextField
+          label="Precio"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+        <TextField
+          label="Stock"
+          value={stock}
+          onChange={(e) => setStock(e.target.value)}
+        />
+        <Button variant="contained" color="primary" type="submit">
+          Guardar cambios
+        </Button>
+      </Box>
+    </form>
+  )
 };
 
 export default UpdateProduct;
