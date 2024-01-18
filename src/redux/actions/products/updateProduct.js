@@ -1,16 +1,15 @@
 import axios from "axios";
 
-const updateProduct = (productID, product) => {
-    const endpoint = "https://petvogue.onrender.com/products/put/" + productID
+const updateProduct = (productID, formValues) => {
+  const endpoint = "https://petvogue.onrender.com/products/update/" + productID;
 
-    return async () => {
-        try {
-            await axios.put(endpoint, product);
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
+  return async () => {
+    try {
+      await axios.put(endpoint, formValues);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
 export default updateProduct;

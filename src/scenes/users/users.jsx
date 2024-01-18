@@ -124,7 +124,7 @@ const Users = () => {
             }
             borderRadius="4px"
           >
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+            <Typography color={colors.grey[100]} sx={{ ml: "10px" }}>
               {status}
             </Typography>
           </Box>

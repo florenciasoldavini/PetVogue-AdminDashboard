@@ -4,16 +4,25 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import Header from "../../../components/Header";
 
-import { useDispatch } from 'react-redux';
-import createProduct from "../../../redux/actions/products/createProduct"
+import { useDispatch } from "react-redux";
+import createProduct from "../../../redux/actions/products/createProduct";
+import PhotoUpload from "../../../components/photoUpload";
+import { useState } from "react";
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [photo, setPhoto] = useState(null);
+  console.log(photo)
 
   const handleFormSubmit = (values) => {
+    values.price = parseInt(values.price, 10);
+    values.stock = parseInt(values.stock, 10);
+    values.image = photo;
+
     console.log(values);
+    console.log(values.image);
     dispatch(createProduct(values));
   };
 
@@ -56,7 +65,7 @@ const CreateProduct = () => {
                 helperText={touched.name && errors.name}
                 sx={{ gridColumn: "span 2" }}
               />
-                            <TextField
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -108,7 +117,7 @@ const CreateProduct = () => {
                 helperText={touched.price && errors.price}
                 sx={{ gridColumn: "span 4" }}
               />
-              <TextField
+              {/* <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -120,6 +129,10 @@ const CreateProduct = () => {
                 error={!!touched.image && !!errors.image}
                 helperText={touched.image && errors.image}
                 sx={{ gridColumn: "span 4" }}
+              /> */}
+              <PhotoUpload
+                photo={photo}
+                setPhoto={setPhoto}
               />
               <TextField
                 fullWidth
@@ -132,19 +145,6 @@ const CreateProduct = () => {
                 name="stock"
                 error={!!touched.stock && !!errors.stock}
                 helperText={touched.stock && errors.stock}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Estado"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.status}
-                name="status"
-                error={!!touched.status && !!errors.status}
-                helperText={touched.status && errors.status}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
@@ -168,11 +168,8 @@ const checkoutSchema = yup.object().shape({
   description: yup.string().required("*Este campo es obligatorio"),
   type: yup.string().required("*Este campo es obligatorio"),
   price: yup.string().required("*Este campo es obligatorio"),
-  image: yup.string().required("*Este campo es obligatorio"),
   stock: yup.string().required("*Este campo es obligatorio"),
   brand: yup.string().required("*Este campo es obligatorio"),
-  status: yup.string().required("*Este campo es obligatorio"),
-
 });
 const initialValues = {
   name: "",
@@ -182,8 +179,6 @@ const initialValues = {
   image: "",
   stock: "",
   brand: "",
-  status: "",
 };
-
 
 export default CreateProduct;
