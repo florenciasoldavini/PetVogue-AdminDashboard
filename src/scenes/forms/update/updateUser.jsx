@@ -1,4 +1,11 @@
-import { MenuItem, Select, Button, Box, TextField, Typography } from "@mui/material";
+import {
+  MenuItem,
+  Select,
+  Button,
+  Box,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import updateUser from "../../../redux/actions/users/updateUser";
@@ -49,9 +56,8 @@ const UpdateUser = () => {
     dispatch(updateUser(currentUser.userID, userData)).catch((error) => {
       console.error("Failed to update user: ", error);
     });
+    dispatch(getAllUsers());
     navigate("/users");
-    navigate(0);
-    console.log(systemRole);
     toast.success("Usuario editado exitosamente!");
   };
 
@@ -106,7 +112,7 @@ const UpdateUser = () => {
           onChange={(e) => setDni(e.target.value)}
         />
 
-        <TextField
+        {/* <TextField
           label="Rol del sistema"
           select
           value={systemRole}
@@ -114,7 +120,7 @@ const UpdateUser = () => {
         >
           <MenuItem value="usuario">usuario</MenuItem>
           <MenuItem value="admin">admin</MenuItem>
-        </TextField>
+        </TextField> */}
         <Button variant="contained" color="primary" type="submit">
           Guardar cambios
         </Button>
