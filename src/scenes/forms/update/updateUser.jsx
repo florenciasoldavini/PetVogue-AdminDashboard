@@ -1,4 +1,11 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  MenuItem,
+  Select,
+  Button,
+  Box,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import updateUser from "../../../redux/actions/users/updateUser";
@@ -21,7 +28,7 @@ const UpdateUser = () => {
   const [address, setAddress] = useState("");
   const [photo, setPhoto] = useState("");
   const [dni, setDni] = useState("");
-  const [systemRole, setSystemRole] = useState("");
+  const [systemRole, setSystemRole] = useState([""]);
 
   useEffect(() => {
     if (currentUser) {
@@ -31,7 +38,7 @@ const UpdateUser = () => {
       setAddress(currentUser.address || "");
       setPhoto(currentUser.photo || "");
       setDni(currentUser.dni || "");
-      setSystemRole(currentUser.systemRole || "");
+      setSystemRole(currentUser.systemRole || [""]);
     }
   }, [currentUser]);
 
@@ -44,13 +51,13 @@ const UpdateUser = () => {
       address,
       photo,
       dni,
-      systemRole,
+      systemRole: [systemRole],
     };
     dispatch(updateUser(currentUser.userID, userData)).catch((error) => {
       console.error("Failed to update user: ", error);
     });
+    dispatch(getAllUsers());
     navigate("/users");
-    navigate(0);
     toast.success("Usuario editado exitosamente!");
   };
 
@@ -105,11 +112,15 @@ const UpdateUser = () => {
           onChange={(e) => setDni(e.target.value)}
         />
 
-        <TextField
+        {/* <TextField
           label="Rol del sistema"
+          select
           value={systemRole}
           onChange={(e) => setSystemRole(e.target.value)}
-        />
+        >
+          <MenuItem value="usuario">usuario</MenuItem>
+          <MenuItem value="admin">admin</MenuItem>
+        </TextField> */}
         <Button variant="contained" color="primary" type="submit">
           Guardar cambios
         </Button>
