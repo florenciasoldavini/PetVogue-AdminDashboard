@@ -107,24 +107,24 @@ const Orders = () => {
       headerName: "mp_external_reference",
       flex: 1,
     },
-    { field: 'delete', headerName: '', width: 50, renderCell: (params) => {
-      return (
-        <IconButton 
-          onClick={(e) => onDelete(e, params.row)}
-        >
-          <DeleteIcon/>
-        </IconButton>
-      );
-    } },
-    { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
-      return (
-        <IconButton
-          onClick={(e) => onEdit(e, params.row)} component={Link} to="/orders/form/update" 
-        >
-          <EditIcon/>
-        </IconButton>
-      );
-    } }
+    // { field: 'delete', headerName: '', width: 50, renderCell: (params) => {
+    //   return (
+    //     <IconButton 
+    //       onClick={(e) => onDelete(e, params.row)}
+    //     >
+    //       <DeleteIcon/>
+    //     </IconButton>
+    //   );
+    // } },
+    // { field: 'edit', headerName: '', width: 50, renderCell: (params) => {
+    //   return (
+    //     <IconButton
+    //       onClick={(e) => onEdit(e, params.row)} component={Link} to="/orders/form/update" 
+    //     >
+    //       <EditIcon/>
+    //     </IconButton>
+    //   );
+    // } }
   ];
 
   return (
@@ -133,9 +133,9 @@ const Orders = () => {
         title="ORDENES DE COMPRA"
       />
       <Box display="flex" justifyContent="end" mt="20px">
-        <Button component={Link} to="/orders/form/create" color="secondary" variant="contained">
+        {/* <Button component={Link} to="/orders/form/create" color="secondary" variant="contained">
           Crear nueva orden de compra
-        </Button>
+        </Button> */}
       </Box>
       <Box
         m="40px 0 0 0"
