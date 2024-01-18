@@ -1,238 +1,123 @@
-import { Box, Button, TextField } from "@mui/material";
-import { Formik } from "formik";
-import * as yup from "yup";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "../../../components/Header";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import updateUser from "../../../redux/actions/users/updateUser";
+import PhotoUpload from "../../../components/photoUpload";
 
-import { useSelector, useDispatch } from 'react-redux';
-import updateUser from "../../../redux/actions/users/updateUser"
-
-const UpdateUser = () => {
+const UpdateUser = ({ closeDialog }) => {
   const dispatch = useDispatch();
-  const userDetail = useSelector(state => state.users.userDetail);
 
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const currentUser = useSelector((state) => state.users.userDetail.rows[0]);
+  //const users = useSelector((state)=> state.users[0].user)
 
-  const handleFormSubmit = (values) => {
-    dispatch(updateUser(values));
+  console.log(currentUser, "currentUser💚");
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [photo, setPhoto] = useState("");
+  //const [birth, setBirth] = useState('');
+  const [dni, setDni] = useState("");
+  const [systemRole, setSystemRole] = useState("");
+
+  useEffect(() => {
+    if (currentUser) {
+      setFirstName(currentUser.firstName || "");
+      setLastName(currentUser.lastName || "");
+      setPhone(currentUser.phone || "");
+      setAddress(currentUser.address || "");
+      setPhoto(currentUser.photo || "");
+      //setBirth(currentUser.birth || '');
+      setDni(currentUser.dni || "");
+      setSystemRole(currentUser.systemRole || "");
+    }
+  }, [currentUser]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Perro");
+    const userData = {
+      firstName,
+      lastName,
+      phone,
+      address,
+      photo,
+      dni,
+      systemRole,
+    };
+    dispatch(updateUser(currentUser.userID, userData)).catch((error) => {
+      console.error("Failed to update user: ", error);
+    });
+    closeDialog();
+  };
+
+  const handleConfirmEdit = () => {
+    console.log("Gato");
   };
 
   return (
-    <Box m="20px">
-      <Header title="EDITAR USUARIO" />
-
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={checkoutSchema}
+    <form onSubmit={handleSubmit}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          maxWidth: 400,
+          margin: "auto",
+        }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Foto"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.photo}
-                name="photo"
-                error={!!touched.photo && !!errors.photo}
-                helperText={touched.photo && errors.photo}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Nombre"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Apellido"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contraseña"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.password}
-                name="password"
-                error={!!touched.password && !!errors.password}
-                helperText={touched.password && errors.password}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Dirección"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.adress}
-                name="adress"
-                error={!!touched.adress && !!errors.adress}
-                helperText={touched.adress && errors.adress}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Celular"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="phone"
-                error={!!touched.phone && !!errors.phone}
-                helperText={touched.phone && errors.phone}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Fecha de nacimiento"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.birth}
-                name="birth"
-                error={!!touched.birth && !!errors.birth}
-                helperText={touched.birth && errors.birth}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="DNI"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.dni}
-                name="dni"
-                error={!!touched.dni && !!errors.dni}
-                helperText={touched.dni && errors.dni}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Role"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.systemRole}
-                name="systemRole"
-                error={!!touched.systemRole && !!errors.systemRole}
-                helperText={touched.systemRole && errors.systemRole}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Estado"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.status}
-                name="status"
-                error={!!touched.status && !!errors.status}
-                helperText={touched.status && errors.status}
-                sx={{ gridColumn: "span 2" }}
-              />
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Aceptar cambios
-              </Button>
-            </Box>
-          </form>
-        )}
-      </Formik>
-    </Box>
+        <Typography
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            maxWidth: 400,
+            margin: "auto",
+          }}
+        >
+          Editar la informacion de {currentUser.firstName}
+        </Typography>
+        <PhotoUpload photo={photo} setPhoto={setPhoto} />
+        <TextField
+          label="Nombre"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        <TextField
+          label="Apellido"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+        <TextField
+          label="Telefono"
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        <TextField
+          label="Direccion"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+
+        <TextField
+          label="Dni"
+          value={dni}
+          onChange={(e) => setDni(e.target.value)}
+        />
+
+        <TextField
+          label="Rol del sistema"
+          value={systemRole}
+          onChange={(e) => setDni(e.target.value)}
+        />
+        <Button variant="contained" color="primary" type="submit">
+          Guardar cambios🐾
+        </Button>
+      </Box>
+    </form>
   );
 };
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("*Este campo es obligatorio"),
-  lastName: yup.string().required("*Este campo es obligatorio"),
-  email: yup.string().email("invalid email").required("Este campo es obligatorio"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  password: yup.string().required("*Este campo es obligatorio"),
-  systemRole: yup.string().required("*Este campo es obligatorio"),
-  phone: yup.string().required("*Este campo es obligatorio"),
-  photo: yup.string().required("*Este campo es obligatorio"),
-  adress: yup.string().required("*Este campo es obligatorio"),
-  birth: yup.string().required("*Este campo es obligatorio"),
-  dni: yup.string().required("*Este campo es obligatorio"),
-  status: yup.string().required("*Este campo es obligatorio"),
-});
-
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  systemRole: "",
-  phone: "",
-  photo: "",
-  adress: "",
-  birth: "",
-  dni: "",
-  status: "",
-};
-
 
 export default UpdateUser;
